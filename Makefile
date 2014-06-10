@@ -4,7 +4,7 @@ DOCKER_USER=paintedfox
 # Change this to suit your needs.
 NAME:=postgresql
 USER:=super
-PASS:=$(shell pwgen -s -1 16)
+PASS:=$(shell cat /proc/sys/kernel/random/uuid)
 DATA_DIR:=/tmp/postgresql
 PORT:=127.0.0.1:5432
 
