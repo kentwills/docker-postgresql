@@ -39,8 +39,11 @@ RUN touch /firstrun
 RUN mkdir /etc/service/postgresql
 RUN ln -s /scripts/start.sh /etc/service/postgresql/run
 
+# Patch my_init to show stderr in the logs.
+RUN sed -i --file=/scripts/patch.sed /sbin/my_init
+
 # Expose our data, log, and configuration directories.
-VOLUME ["/data", "/var/log/postgresql", "/etc/postgresql"]
+VOLUME ["/data", "/var/log", "/etc/postgresql"]
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]

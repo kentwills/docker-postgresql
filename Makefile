@@ -6,11 +6,13 @@ NAME:=postgresql
 USER:=super
 PASS:=$(shell pwgen -s -1 16)
 DATA_DIR:=/tmp/postgresql
+LOGS_DIR:=/tmp/postgresql-logs
 PORT:=127.0.0.1:5432
 
 RUNNING:=$(shell docker ps | grep $(NAME) | cut -f 1 -d ' ')
 ALL:=$(shell docker ps -a | grep $(NAME) | cut -f 1 -d ' ')
-DOCKER_RUN_COMMON=--name="$(NAME)" -p $(PORT):5432 -v $(DATA_DIR):/data -e USER="$(USER)" -e PASS="$(PASS)" $(DOCKER_USER)/postgresql
+DOCKER_RUN_COMMON=--name="$(NAME)" -p $(PORT):5432 -v $(DATA_DIR):/data -v $(LOGS_DIR):/var/log \
+    -e USER="$(USER)" -e PASS="$(PASS)" $(DOCKER_USER)/postgresql
 
 all: build
 
